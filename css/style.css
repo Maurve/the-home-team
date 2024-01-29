@@ -1,0 +1,8 @@
+.cartContainer {
+    width: 750px;
+    margin: auto;
+}
+
+.cartContainer th {
+    text-align: center;
+}

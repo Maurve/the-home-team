@@ -1,7 +1,9 @@
 <?php
     include "../functions.php";
-    $pdo = pdo_connect_mysql();
-
+    if(!isset($_COOKIE['cartIDCookie']) || session_status() === PHP_SESSION_NONE) {
+        session_start();
+        setCartID();
+    }
     $stmt = $pdo->prepare("SELECT * FROM products WHERE type='jersey'");
     $stmt->execute();
     $jerseys = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -16,6 +18,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/all.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
@@ -71,7 +74,7 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-dark">Add to Cart</button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark addToCartButton" data-productid="<?=$jersey['id']?>">Add to Cart</button>
                                 </div>
                                 <small class="text-muted">$<?=$jersey['price']?></small>
                             </div>

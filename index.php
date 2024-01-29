@@ -1,3 +1,11 @@
+<?php 
+    include "functions.php";
+    if(!isset($_COOKIE['cartIDCookie']) || session_status() === PHP_SESSION_NONE) {
+       session_start();
+       setCartID();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +15,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/all.min.css">
+    <script src="js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">

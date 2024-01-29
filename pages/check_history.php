@@ -1,12 +1,5 @@
-<?php
+<?php 
     include "../functions.php";
-    if(!isset($_COOKIE['cartIDCookie']) || session_status() === PHP_SESSION_NONE) {
-        session_start();
-        setCartID();
-    }
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE type='hoodie'");
-    $stmt->execute();
-    $hoodies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoodies</title>
+    <title>Order History</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/all.min.css">
@@ -36,13 +29,13 @@
                         <a class="nav-link" href="shirts.php">Shirts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="hoodies.php">Hoodies</a>
+                        <a class="nav-link" href="hoodies.php">Hoodies</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="order_history.php">Order History</a>
+                        <a class="nav-link active" aria-current="page" href="order_history.php">Order History</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
@@ -54,35 +47,20 @@
     <section class="my-4">
         <div class="p-4 text-center bg-white">
             <div class="container py-4">
-                <h1 class="display-4">Hoodies</h1>
+                <h1 class="display-4">Order History</h1>
                 <p class="lead text-muted">
-                    Our hoodies are designed to keep you warm in any temperature, any time of the day.
+                    Here is your order history.
                 </p>
             </div>
         </div>
     </section>
     <section class="album py-5 bg-light">
         <div class="container">
-            <div class="row">
-                <?php foreach ($hoodies as $hoodie): ?>
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <img class="card-img-top img-fluid" src="<?=$hoodie['image']?>" style="display: block;" alt="<?=$hoodie['name']?>">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <?=$hoodie['name']?>
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-dark addToCartButton" data-productid="<?=$hoodie['id']?>">Add to Cart</button>
-                                </div>
-                                <small class="text-muted">$<?=$hoodie['price']?></small>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    
                 </div>
-                <?php endforeach; ?>
-            </div>
+            </div>    
         </div>
     </section>
 <script src="../js/bootstrap.bundle.min.js"></script>

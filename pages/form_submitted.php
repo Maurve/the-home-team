@@ -1,6 +1,9 @@
 <?php 
     include "../functions.php";
-    $pdo = pdo_connect_mysql();
+    if(!isset($_COOKIE['cartIDCookie']) || session_status() === PHP_SESSION_NONE) {
+        session_start();
+        setCartID();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +15,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/all.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
@@ -32,7 +36,7 @@
                         <a class="nav-link" href="hoodies.php">Hoodies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
+                        <a class="nav-link active" aria-current="page" href="contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="order_history.php">Order History</a>
