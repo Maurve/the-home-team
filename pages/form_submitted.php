@@ -69,7 +69,7 @@
                         if ($statement) {
                             echo "Your form has been submitted. You should get a response in 2-3 business days. Thank you.";
                         } else {
-                            echo "Error";
+                            echo "There was an error submitting your form. Please try again.";
                         };
                     ?>
                 </p>
