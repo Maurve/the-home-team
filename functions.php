@@ -16,7 +16,10 @@
         $password = "";
         $dbname = "web_268";
         // 000webhost database
-        
+        // $hostname = "localhost";
+        // $username = "id21827855_web_268";
+        // $password = "W268spHT*";
+        // $dbname = "id21827855_service_project";
         try {
             return new PDO('mysql:host=' . $hostname . ';dbname=' . $dbname . ';charset=utf8', $username, $password);
         } catch (PDOException) {
