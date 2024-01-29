@@ -1,10 +1,6 @@
-<?php
+<?php 
     include "../functions.php";
     $pdo = pdo_connect_mysql();
-
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE type='shirt'");
-    $stmt->execute();
-    $shirts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shirts</title>
+    <title>Form Submission</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/all.min.css">
@@ -30,7 +26,7 @@
                         <a class="nav-link" href="jerseys.php">Jerseys</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="shirts.php">Shirts</a>
+                        <a class="nav-link" href="shirts.php">Shirts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="hoodies.php">Hoodies</a>
@@ -48,37 +44,35 @@
             </div>
         </div>
     </nav>
-    <section class="my-4">
-        <div class="p-4 text-center bg-white">
-            <div class="container py-4">
-                <h1 class="display-4">Shirts</h1>
+    <section class="my-5">
+        <div class="p-5 text-center bg-white">
+            <div class="container py-5">
+                <h1 class="display-4">Contact Form Submitted</h1>
                 <p class="lead text-muted">
-                    Check out our shirts that you will never have to replace (as long as you aren't growing).
+                    <?php     
+                        $firstName = $_POST['firstName'];
+                        $lastName = $_POST['lastName'];
+                        $emailAddress = $_POST['emailAddress'];
+                        $concern = htmlspecialchars($_POST['concern']);
+
+                        $sql = "INSERT INTO contact(id, first_name, last_name, email, question) VALUES(NULL, :firstName, :lastName, :emailAddress, :concern)";
+
+                        $statement = $pdo->prepare($sql);
+
+                        $statement->execute([
+                            ':firstName' => $firstName,
+                            ':lastName' => $lastName,
+                            ':emailAddress' => $emailAddress,
+                            ':concern' => $concern,
+                        ]);
+
+                        if ($statement) {
+                            echo "Your form has been submitted. You should get a response in 2-3 business days. Thank you.";
+                        } else {
+                            echo "Error";
+                        };
+                    ?>
                 </p>
-            </div>
-        </div>
-    </section>
-    <section class="album py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <?php foreach ($shirts as $shirt): ?>
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <img class="card-img-top img-fluid" src="<?=$shirt['image']?>" style="display: block;" alt="<?=$shirt['name']?>">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <?=$shirt['name']?>
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-dark">Add to Cart</button>
-                                </div>
-                                <small class="text-muted">$<?=$shirt['price']?></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
             </div>
         </div>
     </section>
