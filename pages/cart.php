@@ -4,7 +4,10 @@
         session_start();
         setCartID();
     }
-    $sqlCart = "SELECT cart.quantity, products.name, products.price * cart.quantity as totalCost from cart inner join products on cart.product_id = products.id  where cart.id = :cookie_value";
+    $sqlCart = "SELECT products.id, products.name, cart.quantity, products.price, SUM(price * quantity) OVER(PARTITION BY cart.product_id) AS product_total, SUM(price * quantity) OVER() AS total_cost
+        FROM products
+        INNER JOIN cart ON products.id = cart.product_id
+        WHERE cart.id = :cookie_value";
     $stmt = $pdo->prepare($sqlCart);
     $stmt->execute([
         ':cookie_value' => $_COOKIE['cartIDCookie']
@@ -60,47 +63,93 @@
             <div class="container py-4">
                 <h1 class="display-4">Your Cart</h1>
                 <p class="lead text-muted">
-                    Here is what's in your cart. It will expire in 60 days.
+                    Here is what's in your cart.
                 </p>
             </div>
         </div>
     </section>
     <div class="cartContainer">
-        <table class="table table-striped">
-            <thead>
-                <th>
-                    Product Name
-                </th>
-                <th>
-                    Qty
-                </th>
-                <th>
-                    Price
-                </th>
-            </thead>
-            <tbody>
-                <?php foreach ($cartItems as $cartItem): ?>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Product Name
+                        </th>
+                        <th scope="col">
+                            Qty
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                        <th scope="col">
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        $totalCost = 0;  
+                        $loopIndex = 1;
+                    ?>
+                    <?php foreach ($cartItems as $cartItem): ?>
+                        <?php if ($loopIndex == 1) {
+                            $totalCost = $cartItem['total_cost'];
+                        }?>
+                        <tr>
+                            <td class="productCell" data-productid="<?=$cartItem['id']?>" data-quantity="<?=$cartItem['quantity']?>">
+                                <?=$cartItem['name']?>
+                            </td>
+                            <td class="quantityCell">
+                                <?=$cartItem['quantity']?>
+                            </td>
+                            <td>
+                                $<?=$cartItem['product_total']?>
+                            </td>
+                            <td>
+                                <img src="../svgs/trash.svg">
+                            </td>
+                        </tr>
+                        <?php $loopIndex += 1?>
+                    <?php endforeach; ?>
                     <tr>
                         <td>
-                            <?=$cartItem['name']?>
+                            &nbsp;
                         </td>
                         <td>
-                            <?=$cartItem['quantity']?>
+                            <strong>Total:</strong>
                         </td>
                         <td>
-                            $<?=$cartItem['totalCost']?>
+                            <strong>$<?php echo "$totalCost"?></strong>
+                        </td>
+                        <td>
+                            &nbsp;
                         </td>
                     </tr>
-
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
     <section class="py-5 bg-white">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-6">
-                    <form class="was-validated" action="check_history.php" method="post">
+                    <form class="was-validated" id="orderForm" action="order_confirmation.php" method="post">
+                        <input type="hidden" name="productData" id="productData" value="">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" required>
+                            <div class="invalid-feedback">
+                                Please enter your first name.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" required>
+                            <div class="invalid-feedback">
+                                Please enter your last name.
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <label for="emailAddress" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email address" required>
@@ -108,7 +157,7 @@
                                 Please enter a valid email address.
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-outline-dark">Submit</button>
+                        <button type="button" class="btn btn-outline-success submitButton">Submit</button>
                     </form>
                 </div>
             </div>    
