@@ -78,8 +78,7 @@
                         echo "Your order has been submitted. Thank you for shopping with The Home Team.";
                         session_destroy();
                         if (isset($_COOKIE['cartIDCookie'])) {
-                            unset($_COOKIE['cartIDCookie']); 
-                            setcookie('cartIDCookie', '', -1, '/'); 
+                            unset($_COOKIE['cartIDCookie']);
                         } 
                     } else {
                         echo "There was an error submitting your order. Please try again.";
