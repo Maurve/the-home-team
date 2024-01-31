@@ -30,7 +30,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
         <div class="container">
-            <a class="navbar-brand fs-3" href="../index.php">The Home Team</a>
+            <a class="navbar-brand fs-3" href="index.php">The Home Team</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -52,7 +52,7 @@
                         <a class="nav-link" href="order_history.php">Order History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link active" aria-current="page" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><span class="badge rounded-pill text-bg-danger" id="quantityCountBadge">0</span></a>
                     </li>
                 </ul>
             </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
     </section>
-    <div class="cartContainer">
+    <section class="cartContainer">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -96,18 +96,18 @@
                         <?php if ($loopIndex == 1) {
                             $totalCost = $cartItem['total_cost'];
                         }?>
-                        <tr>
+                        <tr class="productsRow" id="row_<?=$cartItem['id']?>">
                             <td class="productCell" data-productid="<?=$cartItem['id']?>" data-quantity="<?=$cartItem['quantity']?>">
                                 <?=$cartItem['name']?>
                             </td>
-                            <td class="quantityCell">
+                            <td>
                                 <?=$cartItem['quantity']?>
                             </td>
-                            <td>
+                            <td class="productCost" data-productcost="<?=$cartItem['product_total']?>">
                                 $<?=$cartItem['product_total']?>
                             </td>
                             <td>
-                                <img src="../svgs/trash.svg">
+                                <button class="removeButton btn btn-outline-danger btn-sm" data-productid="<?=$cartItem['id']?>">Remove</button>
                             </td>
                         </tr>
                         <?php $loopIndex += 1?>
@@ -119,7 +119,7 @@
                         <td>
                             <strong>Total:</strong>
                         </td>
-                        <td>
+                        <td id="totalCost">
                             <strong>$<?php echo "$totalCost"?></strong>
                         </td>
                         <td>
@@ -129,35 +129,35 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </section>
     <section class="py-5 bg-white">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-6">
-                    <form class="was-validated" id="orderForm" action="order_confirmation.php" method="post">
+                    <form class="needs-validation" id="orderForm" action="order_confirmation.php" method="post">
                         <input type="hidden" name="productData" id="productData" value="">
-                        <div class="mb-3">
+                        <div class="mb-3 has-validation">
                             <label for="firstName" class="form-label">First name</label>
                             <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" required>
                             <div class="invalid-feedback">
                                 Please enter your first name.
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 has-validation">
                             <label for="lastName" class="form-label">Last name</label>
                             <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" required>
                             <div class="invalid-feedback">
                                 Please enter your last name.
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 has-validation">
                             <label for="emailAddress" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email address" required>
                             <div class="invalid-feedback">
                                 Please enter a valid email address.
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-success submitButton">Submit</button>
+                        <button type="submit" class="btn btn-outline-success submitButton">Place Order</button>
                     </form>
                 </div>
             </div>    

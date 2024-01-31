@@ -4,6 +4,14 @@
         session_start();
         setCartID();
     }
+    $emailAddress = $_POST['emailAddress'];
+    $stmt = $pdo->prepare(
+        "SELECT orders.first_name, orders.last_name, orders.email, CAST(orders.order_date AS DATE) AS order_date, order_items.order_id, order_items.quantity, products.name FROM orders 
+        INNER JOIN order_items ON orders.id = order_items.order_id
+        INNER JOIN products ON order_items.product_id = products.id
+        WHERE orders.email = '$emailAddress'");
+    $stmt->execute();
+    $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +28,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
         <div class="container">
-            <a class="navbar-brand fs-3" href="../index.php">The Home Team</a>
+            <a class="navbar-brand fs-3" href="index.php">The Home Team</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -42,7 +50,7 @@
                         <a class="nav-link active" aria-current="page" href="order_history.php">Order History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><span class="badge rounded-pill text-bg-danger" id="quantityCountBadge">0</span></a>
                     </li>
                 </ul>
             </div>
@@ -53,18 +61,23 @@
             <div class="container py-4">
                 <h1 class="display-4">Order History</h1>
                 <p class="lead text-muted">
-                    Here is your order history.
+                    Order history for <strong><?=$emailAddress?></strong>
                 </p>
             </div>
         </div>
     </section>
-    <section class="album py-5 bg-light">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-6">
-                    
+    <section class="cartContainer">
+        <div class="p-2 text-center bg-white">
+                <?php foreach ($orders as $order):?>
+                <div class="container py-2">
+                    <p class="lead text-muted">
+                        Order ID: <strong><?=$order['order_id']?></strong>
+                    </p>
+                    <p class="lead text-muted">
+                        Order Date: <strong><?=$order['order_date']?></strong>
+                    </p>
                 </div>
-            </div>    
+                <?php endforeach; ?>
         </div>
     </section>
 <script src="../js/bootstrap.bundle.min.js"></script>

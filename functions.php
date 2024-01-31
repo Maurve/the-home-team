@@ -7,8 +7,16 @@
                 $productID = $_POST['productID'];
                 addToCart($productID);
             }
+        } else if ($_POST['action'] === 'deleteFromCart') {
+            if (isset($_POST['productID'])) {
+                $productID = $_POST['productID'];
+                deleteFromCart($productID);
+            }
+        } else if ($_POST['action'] === 'getCartQuantity') {
+            getCartQuantity();
         }
     }
+    
     function pdo_connect_mysql() {
         // Local database
         $hostname = "localhost";
@@ -63,5 +71,27 @@
         $sqlCart = "SELECT count(*) from cart where id = ?";
         $stmt = $pdo->prepare($sqlCart);
         $stmt->execute($_COOKIE['cartIDCookie']);
-    }    
+    }
+
+    function deleteFromCart($productID) {
+        $pdo = pdo_connect_mysql();
+        session_start();
+        $product_id = $productID;
+        $cartID = $_SESSION["cartid"];
+        $sql = "DELETE FROM cart
+                WHERE product_id = ? AND id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$product_id, $cartID]);
+    }
+
+    function getCartQuantity() {
+        $pdo = pdo_connect_mysql();
+        @session_start();
+        $cartID = $_SESSION["cartid"];
+        $sql = "SELECT SUM(quantity) AS cartQuantity FROM cart WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$cartID]);
+        $cartQuantity = $stmt->fetch();
+        echo $cartQuantity['cartQuantity'];
+    }
 ?>

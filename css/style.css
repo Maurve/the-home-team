@@ -6,3 +6,20 @@
 .cartContainer th {
     text-align: center;
 }
+
+.trashButton {
+    float: right !important;
+}
+
+.badge {
+    position: absolute !important;
+    font-size: 0.7rem;
+}
+
+.text-success {
+    display: none;
+}
+
+.text-danger {
+    display: none;
+}

@@ -21,7 +21,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
         <div class="container">
-            <a class="navbar-brand fs-3" href="../index.php">The Home Team</a>
+            <a class="navbar-brand fs-3" href="index.php">The Home Team</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -43,7 +43,7 @@
                         <a class="nav-link" href="order_history.php">Order History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link active" aria-current="page" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><span class="badge rounded-pill text-bg-danger" id="quantityCountBadge">0</span></a>
                     </li>
                 </ul>
             </div>
@@ -86,6 +86,7 @@
                 ?>
                 </p>
             </div>
+            <a href="index.php" class="btn btn-outline-dark btn-lg">Go Home</a>
         </div>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script src="../js/script.js"></script>

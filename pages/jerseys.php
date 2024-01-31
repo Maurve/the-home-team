@@ -23,7 +23,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
         <div class="container">
-            <a class="navbar-brand fs-3" href="../index.php">The Home Team</a>
+            <a class="navbar-brand fs-3" href="index.php">The Home Team</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,7 +45,7 @@
                         <a class="nav-link" href="order_history.php">Order History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><span class="badge rounded-pill text-bg-danger" id="quantityCountBadge">0</span></a>
                     </li>
                 </ul>
             </div>
@@ -76,6 +76,8 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-dark addToCartButton" data-productid="<?=$jersey['id']?>">Add to Cart</button>
                                 </div>
+                                <div class="text-success" id="success_<?=$jersey['id']?>">Added to cart.</div>
+                                <div class="text-danger" id="failure_<?=$jersey['id']?>">Failed to add.</div>
                                 <small class="text-muted">$<?=$jersey['price']?></small>
                             </div>
                         </div>

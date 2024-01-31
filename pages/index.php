@@ -1,5 +1,5 @@
 <?php 
-    include "functions.php";
+    include "../functions.php";
     if(!isset($_COOKIE['cartIDCookie']) || session_status() === PHP_SESSION_NONE) {
        session_start();
        setCartID();
@@ -12,10 +12,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Home Team</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/all.min.css">
-    <script src="js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/all.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-white fs-5">
@@ -27,22 +27,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/jerseys.php">Jerseys</a>
+                        <a class="nav-link" href="jerseys.php">Jerseys</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/shirts.php">Shirts</a>
+                        <a class="nav-link" href="shirts.php">Shirts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/hoodies.php">Hoodies</a>
+                        <a class="nav-link" href="hoodies.php">Hoodies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/contact.php">Contact</a>
+                        <a class="nav-link" href="contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/order_history.php">Order History</a>
+                        <a class="nav-link" href="order_history.php">Order History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><span class="badge rounded-pill text-bg-danger" id="quantityCountBadge">0</span></a>
                     </li>
                 </ul>
             </div>
@@ -56,10 +56,10 @@
                     We have been selling apparel to NFL fans that you can't find cheaper at other sites. We may not sell much, but every product is made with care and top materials.
                 </p>
             </div>
-            <a href="pages/jerseys.php" class="btn btn-outline-dark btn-lg">Shop Now</a>
+            <a href="jerseys.php" class="btn btn-outline-dark btn-lg">Shop Now</a>
         </div>
     </section>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/script.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/script.js"></script>
 </body>
 </html>
