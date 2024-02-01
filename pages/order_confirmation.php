@@ -71,7 +71,7 @@
                         $lastId = $pdo->lastInsertId();
                         foreach ($productData as $key => $value) {
                             $stmt2->execute([':order_id' => $lastId,
-                            ':product_id' =>$key,
+                            ':product_id' => $key,
                             ':quantity' => $value]);
                         }
                         $pdo->commit();

@@ -6,9 +6,7 @@
     }
     $emailAddress = $_POST['emailAddress'];
     $stmt = $pdo->prepare(
-        "SELECT orders.first_name, orders.last_name, orders.email, CAST(orders.order_date AS DATE) AS order_date, order_items.order_id, order_items.quantity, products.name FROM orders 
-        INNER JOIN order_items ON orders.id = order_items.order_id
-        INNER JOIN products ON order_items.product_id = products.id
+        "SELECT orders.id, orders.first_name, orders.last_name, orders.email, DATE_FORMAT(order_date, '%M %e, %Y') AS order_date FROM orders 
         WHERE orders.email = '$emailAddress'");
     $stmt->execute();
     $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -68,15 +66,16 @@
     </section>
     <section class="cartContainer">
         <div class="p-2 text-center bg-white">
-                <?php foreach ($orders as $order):?>
+                <?php foreach ($orders as $order): ?>
                 <div class="container py-2">
                     <p class="lead text-muted">
-                        Order ID: <strong><?=$order['order_id']?></strong>
+                        Order ID: <a href="order_summary.php?order_id=<?=$order['id']?>" target="_blank" class="orderIDLink"><strong><?=$order['id']?></strong></a>
                     </p>
                     <p class="lead text-muted">
                         Order Date: <strong><?=$order['order_date']?></strong>
                     </p>
                 </div>
+                <hr>
                 <?php endforeach; ?>
         </div>
     </section>

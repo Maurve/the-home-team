@@ -23,3 +23,7 @@
 .text-danger {
     display: none;
 }
+
+.orderIDLink {
+    text-decoration: none;
+}
